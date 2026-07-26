@@ -15,7 +15,7 @@
 .habit-modal {
   width: min(500px, 90vw);
 
-  background: #1a1d23;
+  background: #1d1d1d;
 
   border: 1px solid #2b2f36;
   border-radius: 18px;
@@ -54,7 +54,7 @@
 .habit-form-group textarea {
   padding: 12px 14px;
 
-  background: #111317;
+  background: #000000;
 
   border: 1px solid #333;
   border-radius: 10px;
