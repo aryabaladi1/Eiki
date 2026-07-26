@@ -90,3 +90,29 @@
 
   color: #9ca3af;
 }
+
+.clickable {
+  cursor: pointer;
+
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  width: fit-content;
+
+  transition: color 0.2s;
+}
+
+.clickable:hover {
+  color: #57b9ff;
+}
+
+.section-arrow {
+  transition: transform 0.2s ease;
+}
+
+.section-arrow.open {
+  transform: rotate(180deg);
+}

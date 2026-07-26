@@ -33,8 +33,9 @@
   display: flex;
 
   justify-content: space-between;
-
   align-items: center;
+
+  gap: 0.75rem;
 
   margin-bottom: 1rem;
 }
@@ -43,10 +44,16 @@
   margin: 0;
 
   font-size: 1.35rem;
-
   font-weight: 600;
 
   color: #57b9ff;
+
+  flex: 1;
+  min-width: 0;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*
@@ -96,9 +103,9 @@
 
   width: 170px;
 
-  background: #1f2329;
+  background: #1d1d1d;
 
-  border: 1px solid #343943;
+  border: 1px solid #2b2f36;
 
   border-radius: 12px;
 
@@ -132,7 +139,7 @@
 }
 
 .habit-menu button:hover {
-  background: #2d333b;
+  background:rgb(39, 39, 39);
 }
 
 .habit-menu .danger {
@@ -150,13 +157,19 @@
 .habit-description {
   color: #d4d4d8;
 
-  line-height: 1.5;
-
   font-size: 0.95rem;
+  line-height: 1.5;
 
   margin: 0;
 
   max-width: 90%;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /*

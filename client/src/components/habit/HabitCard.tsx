@@ -39,7 +39,9 @@ export default function HabitCard({
   return (
     <div className="habit-card" onMouseLeave={onMenuClose}>
       <div className="habit-card-top">
-        <h2>{capitalizeFirstLetter(habit.name)}</h2>
+        <h2 title={capitalizeFirstLetter(habit.name)}>
+          {capitalizeFirstLetter(habit.name)}
+        </h2>
 
         <div className="habit-menu-container">
           <button
@@ -95,7 +97,10 @@ export default function HabitCard({
       </div>
 
       <div className="habit-card-content">
-        <p className="habit-description">
+        <p
+          className="habit-description"
+          title={habit.description || "No description."}
+        >
           {habit.description || "No description."}
         </p>
       </div>

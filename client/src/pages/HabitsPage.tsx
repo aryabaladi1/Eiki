@@ -15,9 +15,12 @@ import HabitCard from "../components/habit/HabitCard";
 
 import type { ApiErrorResponse } from "../types/dto/ApiErrorResponse";
 
+import { ChevronDown } from "lucide-react";
+
 import "../styles/habit/HabitsPage.css";
 import { HabitCreateRequest } from "../types/dto/request/HabitCreateRequest";
 import HabitModal from "../components/habit/HabitModal";
+import ConfirmationModal from "../components/common/ConfirmationModal";
 
 export default function HabitsPage() {
   const [habits, setHabits] = useState<HabitResponse[]>([]);
@@ -32,6 +35,10 @@ export default function HabitsPage() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
+  const [archiveCandidate, setArchiveCandidate] =
+    useState<HabitResponse | null>(null);
+
+  const [showArchived, setShowArchived] = useState(false);
 
   useEffect(() => {
     fetchHabits();
@@ -164,6 +171,24 @@ export default function HabitsPage() {
           onSave={handleSaveHabit}
         />
 
+        <ConfirmationModal
+          open={archiveCandidate !== null}
+          title="Archive Habit"
+          message={`Are you sure you want to archive "${
+            archiveCandidate?.name ?? ""
+          }"?`}
+          confirmText="Archive"
+          danger
+          onClose={() => setArchiveCandidate(null)}
+          onConfirm={async () => {
+            if (!archiveCandidate) return;
+
+            await handleArchiveHabit(archiveCandidate);
+
+            setArchiveCandidate(null);
+          }}
+        />
+
         {loading ? (
           <p className="habits-loading">Loading habits...</p>
         ) : habits.length === 0 ? (
@@ -172,7 +197,9 @@ export default function HabitsPage() {
           <>
             {activeHabits.length > 0 && (
               <>
-                <h2 className="habit-section-title">Active Habits</h2>
+                <h2 className="habit-section-title">
+                  Active Habits ({activeHabits.length})
+                </h2>
 
                 <div className="habits-grid">
                   {activeHabits.map((habit) => (
@@ -192,7 +219,10 @@ export default function HabitsPage() {
 
                         handleMenuClose();
                       }}
-                      onArchive={handleArchiveHabit}
+                      onArchive={(habit) => {
+                        setArchiveCandidate(habit);
+                        handleMenuClose();
+                      }}
                       onUnarchive={handleUnarchiveHabit}
                     />
                   ))}
@@ -202,33 +232,44 @@ export default function HabitsPage() {
 
             {archivedHabits.length > 0 && (
               <>
-                <h2 className="habit-section-title archived-title">
-                  Archived Habits
+                <h2
+                  className="habit-section-title archived-title clickable"
+                  onClick={() => setShowArchived((prev) => !prev)}
+                >
+                  Archived Habits ({archivedHabits.length})
+                  <span className="section-arrow">
+                    <ChevronDown
+                      size={18}
+                      className={`section-arrow ${showArchived ? "open" : ""}`}
+                    />
+                  </span>
                 </h2>
 
-                <div className="habits-grid">
-                  {archivedHabits.map((habit) => (
-                    <HabitCard
-                      key={habit.id}
-                      habit={habit}
-                      menuOpen={openMenuId === habit.id}
-                      onMenuToggle={handleMenuToggle}
-                      onMenuClose={handleMenuClose}
-                      onEdit={(habit) => {
-                        setEditingHabit(habit);
+                {showArchived && (
+                  <div className="habits-grid">
+                    {archivedHabits.map((habit) => (
+                      <HabitCard
+                        key={habit.id}
+                        habit={habit}
+                        menuOpen={openMenuId === habit.id}
+                        onMenuToggle={handleMenuToggle}
+                        onMenuClose={handleMenuClose}
+                        onEdit={(habit) => {
+                          setEditingHabit(habit);
 
-                        setFieldErrors({});
-                        setError("");
+                          setFieldErrors({});
+                          setError("");
 
-                        setShowModal(true);
+                          setShowModal(true);
 
-                        handleMenuClose();
-                      }}
-                      onArchive={handleArchiveHabit}
-                      onUnarchive={handleUnarchiveHabit}
-                    />
-                  ))}
-                </div>
+                          handleMenuClose();
+                        }}
+                        onArchive={handleArchiveHabit}
+                        onUnarchive={handleUnarchiveHabit}
+                      />
+                    ))}
+                  </div>
+                )}
               </>
             )}
           </>
