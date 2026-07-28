@@ -11,14 +11,38 @@
 .week-table {
   width: 100%;
 
+  table-layout: fixed;
+
   border-collapse: collapse;
 }
 
+/*
+    Column sizing
+*/
+
+.habit-column {
+  width: 150px;
+}
+
+.goal-column {
+  width: 75px;
+}
+
 .day-column {
-  width: 90px;
-  min-width: 90px;
-  max-width: 90px;
+  width: 75px;
+
+  min-width: 75px;
+  max-width: 75px;
+
   padding: 4px 2px;
+}
+
+.total-column {
+  width: 80px;
+}
+
+.imbalance-column {
+  width: 95px;
 }
 
 .week-table th,
@@ -28,10 +52,15 @@
   text-align: center;
 
   color: white;
+
+  overflow: hidden;
+
+  white-space: nowrap;
 }
 
 .week-table th {
   font-size: 1rem;
+
   font-weight: 700;
 }
 
@@ -56,5 +85,6 @@
 
 .current-day-column {
   color: #57b9ff;
+
   font-weight: 700;
 }

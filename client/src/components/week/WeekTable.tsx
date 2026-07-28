@@ -32,12 +32,13 @@ export default function WeekTable({
       <table className="week-table">
         <thead>
           <tr>
-            <th>Habit</th>
+            <th className="habit-column">Habit</th>
 
-            <th>Goal</th>
+            <th className="goal-column">Goal</th>
 
             {dates.map((date) => {
               const headerDate = new Date(date);
+
               headerDate.setHours(0, 0, 0, 0);
 
               const isToday = headerDate.getTime() === today.getTime();
@@ -56,9 +57,9 @@ export default function WeekTable({
               );
             })}
 
-            <th>Total</th>
+            <th className="total-column">Total</th>
 
-            <th>Imbalance</th>
+            <th className="imbalance-column">Imbalance</th>
           </tr>
         </thead>
 

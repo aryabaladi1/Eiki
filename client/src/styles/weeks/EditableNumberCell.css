@@ -2,9 +2,11 @@
   display: inline-flex;
 
   justify-content: center;
+
   align-items: center;
 
-  width: 52px;
+  width: 65px;
+
   height: 24px;
 
   padding: 0;
@@ -17,6 +19,7 @@
 .editable-number-input::-webkit-outer-spin-button,
 .editable-number-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+
   margin: 0;
 }
 
@@ -43,7 +46,8 @@
 }
 
 .editable-number-input {
-  width: 52px;
+  width: 65px;
+
   height: 24px;
 
   padding: 0;
