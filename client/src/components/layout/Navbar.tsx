@@ -17,11 +17,17 @@ export default function Navbar() {
       <nav className="navbar-links">
         <NavLink to="/">Home</NavLink>
 
-        <NavLink to="/calendar">Calendar</NavLink>
-
         <NavLink to="/habits">Habits</NavLink>
 
-        <NavLink to="/statistics">Statistics</NavLink>
+        <button className="navbar-disabled-link">
+          Calendar
+          <span className="soon-badge">Soon</span>
+        </button>
+
+        <button className="navbar-disabled-link">
+          Statistics
+          <span className="soon-badge">Soon</span>
+        </button>
       </nav>
 
       <div className="navbar-user">
