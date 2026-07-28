@@ -45,10 +45,6 @@ export default function WeekHabitRow({
         }
       >
         {habitData.habit.name}
-
-        {habitData.habit.archived && (
-          <span className="archived-badge">Archived</span>
-        )}
       </td>
 
       <td>
