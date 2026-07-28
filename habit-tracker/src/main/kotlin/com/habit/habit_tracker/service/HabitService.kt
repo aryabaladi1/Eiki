@@ -3,6 +3,7 @@ package com.habit.habit_tracker.service
 
 import com.habit.habit_tracker.constants.ErrorMessage.USER_NOT_FOUND
 import com.habit.habit_tracker.constants.ErrorMessage.HABIT_NOT_FOUND
+import com.habit.habit_tracker.constants.ErrorMessage.HABIT_ARCHIVED
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
@@ -41,6 +42,13 @@ class HabitService(
         val user = authUtil.getAuthenticatedUser()
         val habit = habitRepository.findByIdAndUserId(habitId, user.id!!)
             .orElseThrow { ApiRequestException(HABIT_NOT_FOUND, HttpStatus.NOT_FOUND)}
+
+        if (habit.archived) {
+            throw ApiRequestException(
+                HABIT_ARCHIVED,
+                HttpStatus.FORBIDDEN
+            )
+        }
 
         var updated = false
 

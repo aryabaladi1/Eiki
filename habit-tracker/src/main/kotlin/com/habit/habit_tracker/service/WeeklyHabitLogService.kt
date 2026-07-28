@@ -1,6 +1,7 @@
 package com.habit.habit_tracker.service
 
 import com.habit.habit_tracker.constants.ErrorMessage.HABIT_NOT_FOUND
+import com.habit.habit_tracker.constants.ErrorMessage.HABIT_ARCHIVED
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -40,6 +41,13 @@ class WeeklyHabitLogService(
                     HttpStatus.NOT_FOUND
                 )
             }
+
+        if (habit.archived) {
+            throw ApiRequestException(
+                HABIT_ARCHIVED,
+                HttpStatus.FORBIDDEN
+            )
+        }
 
         val weeklyLog =
             weeklyHabitLogRepository.findByHabitAndDate(
