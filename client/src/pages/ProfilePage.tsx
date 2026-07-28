@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getUserDetails, updateUserDetails } from "../api/userService";
 import { AxiosError } from "axios";
 import type { ApiErrorResponse } from "../types/dto/ApiErrorResponse";
-
 import type { UserResponse } from "../types/dto/response/UserResponse";
 
 import "../styles/profile/ProfilePage.css";
@@ -41,20 +40,14 @@ export default function ProfilePage() {
     fetchUser();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     setError("");
     setSuccess("");
 
-    const errors: string[] = [];
-
     if (!username.trim()) {
-      errors.push("Username cannot be empty");
-    }
-
-    if (errors.length > 0) {
-      setError(errors.join(", "));
+      setError("Username cannot be empty.");
       return;
     }
 
@@ -87,7 +80,7 @@ export default function ProfilePage() {
     } finally {
       setSaving(false);
     }
-  };
+  }
 
   if (loading) {
     return <div className="profile-loading">Loading profile...</div>;
@@ -95,51 +88,73 @@ export default function ProfilePage() {
 
   return (
     <div className="profile-container">
-      <div className="profile-card">
-        <div className="profile-avatar">
-          {firstName
-            ? firstName.charAt(0).toUpperCase()
-            : username.charAt(0).toUpperCase()}
-        </div>
-
-        <h1 className="profile-title">Your Profile</h1>
-
-        <p className="profile-subtitle">Customize your account information.</p>
+      <div className="profile-content">
+        <header className="profile-header">
+          <h1>Profile</h1>
+          <p>Manage your account information.</p>
+        </header>
 
         <form onSubmit={handleSubmit} className="profile-form">
-          <label>Username</label>
+          <section className="profile-section">
+            <h2>Personal Information</h2>
 
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+            <div className="profile-field">
+              <label>Username</label>
 
-          <label>First Name</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
 
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
+            <div className="profile-field">
+              <label>First Name</label>
 
-          <label>Last Name</label>
+              <input
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
 
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
+            <div className="profile-field">
+              <label>Last Name</label>
 
-          <div className="profile-meta">
-            <p>Created At: {new Date(user!.createdAt).toLocaleDateString()}</p>
+              <input
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+          </section>
 
-            <p>Last Login: {new Date(user!.lastLogin).toLocaleString()}</p>
-          </div>
+          <section className="profile-section">
+            <h2>Account Information</h2>
 
-          {error && <p className="profile-error">{error}</p>}
+            <div className="profile-meta-row">
+              <span>Created</span>
 
-          {success && <p className="profile-success">{success}</p>}
+              <span>
+                {new Date(user!.createdAt).toLocaleDateString(undefined, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            </div>
+
+            <div className="profile-meta-row">
+              <span>Last Login</span>
+
+              <span>
+                {new Date(user!.lastLogin).toLocaleString(undefined, {
+                  dateStyle: "long",
+                  timeStyle: "short",
+                })}
+              </span>
+            </div>
+          </section>
 
           <button
             type="submit"
@@ -148,6 +163,10 @@ export default function ProfilePage() {
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>
+
+          {success && <p className="profile-success">{success}</p>}
+
+          {error && <p className="profile-error">{error}</p>}
         </form>
       </div>
     </div>
