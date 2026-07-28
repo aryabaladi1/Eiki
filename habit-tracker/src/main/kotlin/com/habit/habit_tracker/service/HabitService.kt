@@ -57,7 +57,7 @@ class HabitService(
                 name = it
                 updated = true
             }
-            request.description?.takeIf {it.isNotBlank()}?.let { 
+            request.description?.let {
                 description = it 
                 updated = true
             }
