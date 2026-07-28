@@ -4,24 +4,44 @@
   padding: 2px !important;
 }
 
-/* Progress colors */
+/*
+    Archived habits
+*/
+
+.archived-cell {
+  cursor: not-allowed;
+
+  /* background: rgba(255, 255, 255, 0.015); */
+}
+
+.archived-cell .progress-0,
+.archived-cell .progress-1,
+.archived-cell .progress-2,
+.archived-cell .progress-3,
+.archived-cell .progress-4 {
+  opacity: 0.45;
+}
+
+/*
+    Progress colors
+*/
 
 .progress-0 {
-  color: #ff6b6b; /* nothing */
+  color: #ff6b6b;
 }
 
 .progress-1 {
-  color: #ff8585; /* low */
+  color: #ff8585;
 }
 
 .progress-2 {
-  color: #9affbc; /* decent progress */
+  color: #9affbc;
 }
 
 .progress-3 {
-  color: #63e891; /* goal reached */
+  color: #63e891;
 }
 
 .progress-4 {
-  color: #49d17d; /* exceeded */
+  color: #49d17d;
 }

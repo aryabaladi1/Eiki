@@ -6,12 +6,14 @@ import { minutesToTime } from "../../utils/time";
 interface EditableNumberCellProps {
   value?: number | null;
   mode?: "number" | "time";
+  disabled?: boolean;
   onSave: (value: number) => void;
 }
 
 export default function EditableNumberCell({
   value,
   mode = "number",
+  disabled,
   onSave,
 }: EditableNumberCellProps) {
   const [editing, setEditing] = useState(false);
@@ -171,7 +173,14 @@ export default function EditableNumberCell({
   }
 
   return (
-    <div className="editable-number-display" onClick={() => setEditing(true)}>
+    <div
+      className={`editable-number-display ${disabled ? "disabled" : ""}`}
+      onClick={() => {
+        if (!disabled) {
+          setEditing(true);
+        }
+      }}
+    >
       {mode === "time" ? minutesToTime(value ?? 0) : value ?? 0}
     </div>
   );

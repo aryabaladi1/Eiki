@@ -39,12 +39,23 @@ export default function WeekHabitRow({
 
   return (
     <tr className="week-habit-row">
-      <td className="habit-name">{habitData.habit.name}</td>
+      <td
+        className={
+          habitData.habit.archived ? "habit-name archived" : "habit-name"
+        }
+      >
+        {habitData.habit.name}
+
+        {habitData.habit.archived && (
+          <span className="archived-badge">Archived</span>
+        )}
+      </td>
 
       <td>
         <EditableNumberCell
           mode="time"
           value={weeklyLog?.weeklyGoal}
+          disabled={habitData.habit.archived}
           onSave={(goal) => onWeeklyGoalChange(habitData.habit.id, goal)}
         />
       </td>
@@ -61,6 +72,7 @@ export default function WeekHabitRow({
             date={dateString}
             dailyLog={log}
             dailyGoal={weeklyLog?.dailyGoal}
+            disabled={habitData.habit.archived}
             onMinutesChange={onDailyMinutesChange}
           />
         );

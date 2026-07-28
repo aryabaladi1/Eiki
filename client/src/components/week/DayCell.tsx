@@ -12,6 +12,8 @@ interface DayCellProps {
 
   dailyGoal?: number | null;
 
+  disabled?: boolean;
+
   onMinutesChange: (habitId: number, date: string, minutes: number) => void;
 }
 
@@ -20,6 +22,7 @@ export default function DayCell({
   date,
   dailyLog,
   dailyGoal,
+  disabled = false,
   onMinutesChange,
 }: DayCellProps) {
   const minutes = dailyLog?.minutesDone ?? 0;
@@ -35,15 +38,20 @@ export default function DayCell({
     if (ratio < 0.5) return "progress-1";
     if (ratio < 1) return "progress-2";
     if (ratio < 1.5) return "progress-3";
+
     return "progress-4";
   }
 
   return (
-    <td className={`day-cell`}>
-      <div className={getProgressClass()}>
+    <td className={`day-cell ${disabled ? "archived-cell" : ""}`}>
+      <div
+        className={getProgressClass()}
+        title={disabled ? "Archived habits cannot be edited" : ""}
+      >
         <EditableNumberCell
           mode="time"
           value={dailyLog?.minutesDone}
+          disabled={disabled}
           onSave={(minutes) => onMinutesChange(habitId, date, minutes)}
         />
       </div>
