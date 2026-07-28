@@ -44,7 +44,7 @@ export default function WeekHabitRow({
           habitData.habit.archived ? "habit-name archived" : "habit-name"
         }
       >
-        {habitData.habit.name}
+        <div className="habit-name-text">{habitData.habit.name}</div>
       </td>
 
       <td>

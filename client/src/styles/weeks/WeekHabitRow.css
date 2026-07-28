@@ -19,13 +19,16 @@
 
   font-weight: 600;
 
-  white-space: nowrap;
-
   max-width: 120px;
+
+  padding-left: 12px;
+  padding-right: 12px;
 
   overflow: hidden;
 
   text-overflow: ellipsis;
+
+  white-space: nowrap;
 }
 
 .habit-name.archived {
