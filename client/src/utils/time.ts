@@ -34,15 +34,15 @@ export function formatHabitTime(
       const parts: string[] = [];
 
       if (days > 0) {
-        parts.push(`${days} day${days > 1 ? "s" : ""}`);
+        parts.push(`${days}d`);
       }
 
       if (hours > 0) {
-        parts.push(`${hours} hour${hours > 1 ? "s" : ""}`);
+        parts.push(`${hours}h`);
       }
 
       if (mins > 0) {
-        parts.push(`${mins} minute${mins > 1 ? "s" : ""}`);
+        parts.push(`${mins}m`);
       }
 
       return parts.length > 0 ? parts.join(" ") : "0 minutes";
