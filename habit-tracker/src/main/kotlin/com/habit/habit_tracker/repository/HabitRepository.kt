@@ -13,6 +13,6 @@ interface HabitRepository : JpaRepository<Habit, Long> {
     @Query("SELECT h FROM Habit h WHERE h.id = :habitId AND h.user.id = :userId")
     fun findByIdAndUserId(@Param("habitId") habitId: Long, @Param("userId") userId: Long): Optional<Habit>
 
-    @Query("SELECT h FROM Habit h WHERE h.user.id = :userId")
+    @Query("SELECT h FROM Habit h WHERE h.user.id = :userId ORDER BY h.archived ASC, h.createdAt ASC")
     fun findAllByUserId(@Param("userId") userId: Long): List<Habit>
 }
