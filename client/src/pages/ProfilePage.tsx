@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import type { ApiErrorResponse } from "../types/dto/ApiErrorResponse";
 import type { UserResponse } from "../types/dto/response/UserResponse";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 import "../styles/profile/ProfilePage.css";
 
@@ -21,6 +22,7 @@ export default function ProfilePage() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   useEffect(() => {
     async function fetchUser() {
@@ -44,7 +46,7 @@ export default function ProfilePage() {
   }, []);
 
   function handleLogout() {
-    localStorage.removeItem("token");
+    logout();
 
     navigate("/login", { replace: true });
   }
