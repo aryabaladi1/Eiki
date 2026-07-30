@@ -122,3 +122,47 @@
 
   cursor: not-allowed;
 }
+
+.login-footer,
+.register-footer {
+  margin-top: 1.25rem;
+
+  text-align: center;
+
+  color: #9ca3af;
+
+  font-size: 0.95rem;
+}
+
+.login-footer a,
+.register-footer a {
+  color: #57b9ff;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: color 0.2s ease;
+}
+
+.login-footer a:hover,
+.register-footer a:hover {
+  color: #7bc8ff;
+}
+
+.login-form,
+.register-form {
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease,
+    transform .25s ease;
+}
+
+.login-form:hover,
+.register-form:hover {
+  border-color: #363c45;
+
+  box-shadow:
+    0 22px 70px rgba(0,0,0,.6),
+    0 0 50px rgba(87,185,255,.08);
+}

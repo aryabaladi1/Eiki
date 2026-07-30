@@ -1,4 +1,7 @@
 "use client";
+
+import { Link } from "react-router-dom";
+
 import "../../styles/login/LoginView.css";
 
 interface LoginViewProps {
@@ -23,7 +26,7 @@ export default function LoginView({
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h1 className="login-title">Login</h1>
+        <h1 className="login-title">Log into your account</h1>
 
         <input
           type="text"
@@ -44,8 +47,13 @@ export default function LoginView({
         {error && <p className="login-error">{error}</p>}
 
         <button type="submit" disabled={loading} className="login-button">
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Signing In..." : "Sign In"}
         </button>
+
+        <p className="login-footer">
+          Don't have an account?{" "}
+          <Link to="/register">Create one</Link>
+        </p>
       </form>
     </div>
   );

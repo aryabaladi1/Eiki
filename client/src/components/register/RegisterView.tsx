@@ -1,4 +1,7 @@
 "use client";
+
+import { Link } from "react-router-dom";
+
 import "../../styles/register/RegisterView.css";
 
 interface RegisterViewProps {
@@ -23,7 +26,7 @@ export default function RegisterView({
   return (
     <div className="register-container">
       <form onSubmit={handleSubmit} className="register-form">
-        <h1 className="register-title">Register</h1>
+        <h1 className="register-title">Create Account</h1>
 
         <input
           type="text"
@@ -43,9 +46,14 @@ export default function RegisterView({
 
         {error && <p className="register-error">{error}</p>}
 
-        <button type="submit" disabled={loading} className="register-button">
-          {loading ? "Registering..." : "Register"}
+        <button type="submit" disabled={!!loading} className="register-button">
+          {loading ? "Creating Account..." : "Create Account"}
         </button>
+
+        <p className="register-footer">
+          Already have an account?{" "}
+          <Link to="/login">Sign in</Link>
+        </p>
       </form>
     </div>
   );
