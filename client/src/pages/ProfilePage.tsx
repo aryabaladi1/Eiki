@@ -3,6 +3,7 @@ import { getUserDetails, updateUserDetails } from "../api/userService";
 import { AxiosError } from "axios";
 import type { ApiErrorResponse } from "../types/dto/ApiErrorResponse";
 import type { UserResponse } from "../types/dto/response/UserResponse";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/profile/ProfilePage.css";
 
@@ -18,6 +19,8 @@ export default function ProfilePage() {
 
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUser() {
@@ -39,6 +42,12 @@ export default function ProfilePage() {
 
     fetchUser();
   }, []);
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+
+    navigate("/login", { replace: true });
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -168,6 +177,20 @@ export default function ProfilePage() {
 
           {error && <p className="profile-error">{error}</p>}
         </form>
+
+        <section className="profile-danger-section">
+          <h2>Session</h2>
+
+          <p>Sign out of your account on this device.</p>
+
+          <button
+            type="button"
+            className="profile-logout-button"
+            onClick={handleLogout}
+          >
+            Log Out
+          </button>
+        </section>
       </div>
     </div>
   );
