@@ -39,7 +39,7 @@ export default function LoginPage() {
     try {
       const res = await loginUser({ username, password });
       login(res.token);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       const error = err as AxiosError<ApiErrorResponse>;
       const data = error.response?.data;
