@@ -5,7 +5,6 @@ habit-tracker/out/
 habit-tracker/.gradle/
 habit-tracker/.idea/
 habit-tracker/*.iml
-habit-tracker/src/main/resources/application.properties
 habit-tracker/.kotlin
 
 # Logs
