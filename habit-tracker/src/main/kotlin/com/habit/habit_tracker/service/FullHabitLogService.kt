@@ -2,11 +2,13 @@ package com.habit.habit_tracker.service
 
 import org.springframework.stereotype.Service
 import com.habit.habit_tracker.dto.response.FullHabitLogsForWeekResponse
+import com.habit.habit_tracker.exception.ApiRequestException
 import com.habit.habit_tracker.mapper.FullHabitLogsForWeekMapper
 import com.habit.habit_tracker.repository.DailyHabitLogRepository
 import com.habit.habit_tracker.repository.HabitRepository
 import com.habit.habit_tracker.repository.WeeklyHabitLogRepository
 import com.habit.habit_tracker.security.AuthUtil
+import org.springframework.http.HttpStatus
 import java.time.LocalDate
 
 @Service
@@ -17,20 +19,27 @@ class FullHabitLogService(
     private val authUtil: AuthUtil
 ) {
     fun getFullHabitLogsForWeek(weekStart: LocalDate, weekEnd: LocalDate): List<FullHabitLogsForWeekResponse> {
-        val user = authUtil.getAuthenticatedUser()
+        if (weekEnd.isBefore(weekStart)) {
+            throw ApiRequestException(
+                "Week end cannot be before week start",
+                HttpStatus.BAD_REQUEST
+            )
+        }
 
-        val habits = habitRepository.findAllByUserId(user.id!!)
+        val userId = authUtil.getAuthenticatedUser().id!!
+
+        val habits = habitRepository.findAllByUserId(userId)
 
         val dailyLogs =
             dailyHabitLogRepository.findAllForUserWeek(
-                user.id!!,
+                userId,
                 weekStart,
                 weekEnd
             )
 
         val weeklyLogs =
             weeklyHabitLogRepository.findAllForUserWeek(
-                user.id!!,
+                userId,
                 weekStart,
                 weekEnd
             )
