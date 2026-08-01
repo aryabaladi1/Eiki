@@ -5,5 +5,6 @@ export interface HabitResponse {
   description?: string | null;
   minutesTotal: number;
   archived: boolean;
+  archivedAt: string;
   createdAt: string;
 }
