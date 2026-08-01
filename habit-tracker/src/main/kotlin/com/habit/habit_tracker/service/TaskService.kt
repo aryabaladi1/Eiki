@@ -29,11 +29,11 @@ class TaskService(
 
         return taskRepository.save(
             Task(
-                name = request.name!!,
+                name = request.name.trim(),
                 description = request.description,
                 user = user,
                 dueDate = request.dueDate,
-                difficulty = request.difficulty!!
+                difficulty = request.difficulty
             )
         )
     }
@@ -45,8 +45,8 @@ class TaskService(
             .orElseThrow { ApiRequestException(TASK_NOT_FOUND, HttpStatus.NOT_FOUND) }
 
         task.apply {
-            request.name?.let { name = it }
-            request.description?.let { description = it }
+            request.name?.let { name = it.trim() }
+            request.description?.let { description = it.trim() }
             request.difficulty?.let { difficulty = it }
             request.status?.let { status = it }
         }
