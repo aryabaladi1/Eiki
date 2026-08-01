@@ -1,7 +1,6 @@
 package com.habit.habit_tracker.service
 
 import com.habit.habit_tracker.constants.ErrorMessage.USER_IN_USE
-import com.habit.habit_tracker.constants.ErrorMessage.USER_NOT_FOUND
 import com.habit.habit_tracker.constants.ErrorMessage.INVALID_CREDENTIALS
 
 import com.habit.habit_tracker.domain.User
@@ -15,6 +14,7 @@ import com.habit.habit_tracker.security.UserPrincipal
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class AuthService(
@@ -23,30 +23,37 @@ class AuthService(
     private val jwtService: JwtService
 ) {
     fun registerUser(request: RegisterRequest): AuthResult {
-        if (userRepository.findByUsername(request.username).isPresent) {
+        val username = request.username.trim().lowercase()
+
+        if (userRepository.findByUsername(username).isPresent) {
             throw ApiRequestException(USER_IN_USE, HttpStatus.CONFLICT)
         }
 
         val newUser = User(
-            username = request.username,
+            username = username,
             password = passwordEncoder.encode(request.password)
         )
 
-        userRepository.save(newUser)
+        val savedUser = userRepository.save(newUser)
 
-        val userPrincipal = UserPrincipal(newUser)
+        val userPrincipal = UserPrincipal(savedUser)
         val token = jwtService.generateToken(userPrincipal)
 
-        return AuthResult(newUser, token)
+        return AuthResult(savedUser, token)
     }
 
     fun loginUser(request: LoginRequest): AuthResult {
-        val user = userRepository.findByUsername(request.username)
-            .orElseThrow { ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND) }
+        val username = request.username.trim().lowercase()
+
+        val user = userRepository.findByUsername(username)
+            .orElseThrow { ApiRequestException(INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED) }
 
         if (!passwordEncoder.matches(request.password, user.password)) {
             throw ApiRequestException(INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED)
         }
+
+        user.lastLogin = LocalDateTime.now()
+        userRepository.save(user)
 
         val userPrincipal = UserPrincipal(user)
         val token = jwtService.generateToken(userPrincipal)

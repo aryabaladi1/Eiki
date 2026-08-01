@@ -1,7 +1,5 @@
 package com.habit.habit_tracker.repository
 
-// import org.springframework.data.jpa.repository.Lock
-// import jakarta.persistence.LockModeType
 import com.habit.habit_tracker.domain.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
