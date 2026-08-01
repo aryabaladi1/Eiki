@@ -7,7 +7,14 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "weekly_habit_logs")
+@Table(
+    name = "weekly_habit_logs",
+    uniqueConstraints = [
+        UniqueConstraint(
+            columnNames = ["habit_id", "start_date", "end_date"]
+        )
+    ]
+)
 data class WeeklyHabitLog(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "whl_seq")

@@ -3,9 +3,6 @@ package com.habit.habit_tracker.service
 import com.habit.habit_tracker.constants.ErrorMessage.HABIT_NOT_FOUND
 import com.habit.habit_tracker.constants.ErrorMessage.HABIT_ARCHIVED
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
@@ -15,6 +12,7 @@ import com.habit.habit_tracker.exception.ApiRequestException
 import com.habit.habit_tracker.repository.HabitRepository
 import com.habit.habit_tracker.repository.WeeklyHabitLogRepository
 import com.habit.habit_tracker.security.AuthUtil
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class WeeklyHabitLogService(
@@ -22,12 +20,19 @@ class WeeklyHabitLogService(
     private val habitRepository: HabitRepository,
     private val authUtil: AuthUtil
 ) {
-    private val logger: Logger = LoggerFactory.getLogger(WeeklyHabitLogService::class.java)
 
+    @Transactional
     fun updateWeeklyGoal(
         habitId: Long,
         request: UpdateWeeklyGoalRequest
     ): WeeklyHabitLog {
+
+        if (request.weekEnd.isBefore(request.weekStart)) {
+            throw ApiRequestException(
+                "Week end cannot be before week start",
+                HttpStatus.BAD_REQUEST
+            )
+        }
 
         val user = authUtil.getAuthenticatedUser()
 
@@ -50,7 +55,7 @@ class WeeklyHabitLogService(
         }
 
         val weeklyLog =
-            weeklyHabitLogRepository.findByHabitAndDate(
+            weeklyHabitLogRepository.findByHabitIdAndWeekRange(
                 habitId,
                 request.weekStart,
                 request.weekEnd

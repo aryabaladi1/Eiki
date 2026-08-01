@@ -13,7 +13,7 @@ import com.habit.habit_tracker.domain.WeeklyHabitLog
 @Repository
 interface WeeklyHabitLogRepository : JpaRepository<WeeklyHabitLog, Long> {
     @Query("SELECT w FROM WeeklyHabitLog w WHERE w.habit.id = :habitId AND w.weekStart = :weekStart AND w.weekEnd = :weekEnd")
-    fun findByHabitAndDate(
+    fun findByHabitIdAndWeekRange(
         @Param("habitId") habitId: Long,
         @Param("weekStart") weekStart: LocalDate,
         @Param("weekEnd") weekEnd: LocalDate,
