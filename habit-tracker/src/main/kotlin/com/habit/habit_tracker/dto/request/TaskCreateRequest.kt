@@ -12,7 +12,7 @@ data class TaskCreateRequest(
 
     @field:NotBlank(message = "Task name cannot be empty")
     @field:Size(max = 50, message = "Task name cannot exceed 50 characters")
-    val name: String? = null,
+    val name: String,
 
     @field:Size(max = 200, message = "Description cannot exceed 200 characters")
     val description: String? = null,
