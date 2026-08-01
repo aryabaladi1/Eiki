@@ -3,7 +3,7 @@ package com.habit.habit_tracker.controller
 import com.habit.habit_tracker.dto.request.DailyHabitLogRequest
 import com.habit.habit_tracker.dto.response.DailyHabitLogResponse
 import com.habit.habit_tracker.dto.request.UpdateWeeklyGoalRequest
-import com.habit.habit_tracker.dto.response.FullHabitLogsForWeek
+import com.habit.habit_tracker.dto.response.FullHabitLogsForWeekResponse
 import com.habit.habit_tracker.dto.response.UpdateWeeklyGoalResponse
 import com.habit.habit_tracker.mapper.DailyHabitLogMapper
 import com.habit.habit_tracker.exception.ApiRequestException
@@ -68,7 +68,7 @@ class HabitLogController(
     fun getFullHabitLogsForWeek(
         @RequestParam("weekStart") weekStartString: String,
         @RequestParam("weekEnd") weekEndString: String
-    ): ResponseEntity<List<FullHabitLogsForWeek>> {
+    ): ResponseEntity<List<FullHabitLogsForWeekResponse>> {
         return try {
             val weekStart = LocalDate.parse(weekStartString)
             val weekEnd = LocalDate.parse(weekEndString)

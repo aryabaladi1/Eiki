@@ -1,7 +1,7 @@
 package com.habit.habit_tracker.service
 
 import org.springframework.stereotype.Service
-import com.habit.habit_tracker.dto.response.FullHabitLogsForWeek
+import com.habit.habit_tracker.dto.response.FullHabitLogsForWeekResponse
 import com.habit.habit_tracker.mapper.FullHabitLogsForWeekMapper
 import com.habit.habit_tracker.repository.DailyHabitLogRepository
 import com.habit.habit_tracker.repository.HabitRepository
@@ -16,7 +16,7 @@ class FullHabitLogService(
     private val weeklyHabitLogRepository: WeeklyHabitLogRepository,
     private val authUtil: AuthUtil
 ) {
-    fun getFullHabitLogsForWeek(weekStart: LocalDate, weekEnd: LocalDate): List<FullHabitLogsForWeek> {
+    fun getFullHabitLogsForWeek(weekStart: LocalDate, weekEnd: LocalDate): List<FullHabitLogsForWeekResponse> {
         val user = authUtil.getAuthenticatedUser()
 
         val habits = habitRepository.findAllByUserId(user.id!!)

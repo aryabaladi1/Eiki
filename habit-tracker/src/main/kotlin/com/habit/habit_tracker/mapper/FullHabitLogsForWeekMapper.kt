@@ -4,7 +4,7 @@ import com.habit.habit_tracker.domain.DailyHabitLog
 import com.habit.habit_tracker.domain.WeeklyHabitLog
 import com.habit.habit_tracker.domain.Habit
 
-import com.habit.habit_tracker.dto.response.FullHabitLogsForWeek
+import com.habit.habit_tracker.dto.response.FullHabitLogsForWeekResponse
 
 
 object FullHabitLogsForWeekMapper {
@@ -13,7 +13,7 @@ object FullHabitLogsForWeekMapper {
         d: List<DailyHabitLog>,
         w: WeeklyHabitLog?,
         h: Habit
-    ): FullHabitLogsForWeek {
+    ): FullHabitLogsForWeekResponse {
 
         val dailyHabitLogs =
             d.map {
@@ -32,7 +32,7 @@ object FullHabitLogsForWeekMapper {
         val habitResponse =
             HabitMapper.toHabitResponse(h)
 
-        return FullHabitLogsForWeek(
+        return FullHabitLogsForWeekResponse(
             dailyHabitLogs,
             weeklyHabitLogResponse,
             habitResponse
