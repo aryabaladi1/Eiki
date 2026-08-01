@@ -15,4 +15,6 @@ interface HabitRepository : JpaRepository<Habit, Long> {
 
     @Query("SELECT h FROM Habit h WHERE h.user.id = :userId ORDER BY h.archived ASC, h.createdAt ASC")
     fun findAllByUserId(@Param("userId") userId: Long): List<Habit>
+
+    fun countByUserId(userId: Long): Long
 }

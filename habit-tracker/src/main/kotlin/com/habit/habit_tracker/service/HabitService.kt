@@ -14,6 +14,7 @@ import com.habit.habit_tracker.exception.ApiRequestException
 import com.habit.habit_tracker.repository.HabitRepository
 import com.habit.habit_tracker.repository.UserRepository
 import com.habit.habit_tracker.security.AuthUtil
+import jakarta.transaction.Transactional
 import java.time.LocalDateTime
 
 
@@ -23,21 +24,32 @@ class HabitService(
     private val userRepository: UserRepository,
     private val authUtil: AuthUtil
 ) {
+    @Transactional
     fun createHabit(request: HabitCreateRequest): Habit {
         val user = authUtil.getAuthenticatedUser()
             .let { userRepository.findById(it.id!!).orElseThrow {
                 ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND)
             } } // This is necessary for now, due to detached entity issues :<
 
+        val currentCount = habitRepository.countByUserId(user.id!!)
+
+        if (currentCount >= 50) {
+            throw ApiRequestException(
+                "Maximum number of habits reached",
+                HttpStatus.BAD_REQUEST
+            )
+        }
+
         return habitRepository.save(
             Habit(
                 user = user,
-                name = request.name,
-                description = request.description
+                name = request.name.trim(),
+                description = request.description?.trim()
             )
         )
     }
 
+    @Transactional
     fun updateHabit(habitId: Long, request: HabitUpdateRequest): Habit {
         val user = authUtil.getAuthenticatedUser()
         val habit = habitRepository.findByIdAndUserId(habitId, user.id!!)
@@ -53,12 +65,12 @@ class HabitService(
         var updated = false
 
         habit.apply {
-            request.name?.takeIf { it.isNotBlank() }?.let { 
+            request.name?.trim()?.takeIf { it.isNotBlank() }?.let {
                 name = it
                 updated = true
             }
-            request.description?.let {
-                description = it 
+            request.description?.trim()?.let {
+                description = it
                 updated = true
             }
         }
@@ -66,6 +78,7 @@ class HabitService(
         return if (updated) habitRepository.save(habit) else habit
     }
 
+    @Transactional
     fun archiveHabit(habitId: Long) : Habit {
         val user = authUtil.getAuthenticatedUser()
         val habit = habitRepository.findByIdAndUserId(habitId, user.id!!)
@@ -79,6 +92,7 @@ class HabitService(
         return habitRepository.save(habit)
     }
 
+    @Transactional
     fun unarchiveHabit(habitId: Long) : Habit {
         val user = authUtil.getAuthenticatedUser()
         val habit = habitRepository.findByIdAndUserId(habitId, user.id!!)
