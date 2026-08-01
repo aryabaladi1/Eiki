@@ -1,6 +1,7 @@
 package com.habit.habit_tracker.domain
 
 import jakarta.persistence.*
+import jakarta.validation.constraints.Size
 
 import java.time.LocalDateTime
 
@@ -16,16 +17,19 @@ data class User(
     @Column(name = "id")
     val id: Long? = null,
 
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true, length = 50)
+    @field:Size(min = 3, max = 50)
     var username: String,
 
     @Column(name = "password", nullable = false)
     var password: String,
 
     @Column(name = "first_name")
+    @field:Size(max = 50)
     var firstName: String? = null,
 
     @Column(name = "last_name")
+    @field:Size(max = 50)
     var lastName: String? = null,
 
     @Column(name = "last_login")

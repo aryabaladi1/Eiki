@@ -2,7 +2,6 @@ package com.habit.habit_tracker.domain
 
 import jakarta.persistence.*
 import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Size
 
 import java.time.LocalDateTime
@@ -28,7 +27,7 @@ data class Habit(
     @field:Size(max = 200)
     var description: String? = null,
 
-    @Column(name = "minutes_total")
+    @Column(name = "minutes_total", nullable = false)
     @field:Min(0)
     var minutesTotal: Int = 0,
 

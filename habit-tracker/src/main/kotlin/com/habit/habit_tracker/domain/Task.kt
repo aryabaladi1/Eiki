@@ -18,7 +18,7 @@ data class Task(
     @Column(name = "id")
     val id: Long? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     val user: User,
 
@@ -36,7 +36,7 @@ data class Task(
 
     @Enumerated(EnumType.STRING)
     @Column(name = "difficulty")
-    var difficulty: TaskDifficulty,
+    var difficulty: TaskDifficulty? = null,
 
     @Column(name = "due_date")
     val dueDate: LocalDate? = null,
