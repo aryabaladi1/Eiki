@@ -13,7 +13,7 @@ data class TaskResponse(
     val name: String,
     val description: String?,
     val status: TaskStatus,
-    val difficulty: TaskDifficulty,
+    val difficulty: TaskDifficulty?,
     val dueDate: LocalDate?,
     val createdAt: LocalDateTime
 )

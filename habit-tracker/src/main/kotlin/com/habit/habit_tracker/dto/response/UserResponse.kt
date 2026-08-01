@@ -9,6 +9,6 @@ data class UserResponse(
     val username: String,
     val firstName: String?,
     val lastName: String?,
-    val lastLogin: LocalDateTime,
+    val lastLogin: LocalDateTime?,
     val createdAt: LocalDateTime
 )
