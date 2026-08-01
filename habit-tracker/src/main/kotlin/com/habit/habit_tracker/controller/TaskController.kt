@@ -16,7 +16,6 @@ import jakarta.validation.Valid
 class TaskController(private val taskService: TaskService) {
     @PostMapping
     fun createTask(@Valid @RequestBody request: TaskCreateRequest): ResponseEntity<TaskResponse> {
-        println("zayebal blin")
         val task = taskService.createTask(request)
         val response = TaskMapper.toTaskResponse(task)
         return ResponseEntity.ok(response)

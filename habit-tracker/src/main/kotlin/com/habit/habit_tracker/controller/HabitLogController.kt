@@ -19,7 +19,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
 @RestController
-@RequestMapping("api/v1/logs")
+@RequestMapping("/api/v1/logs")
 class HabitLogController(
     private val dailyHabitLogService: DailyHabitLogService,
     private val weeklyHabitLogService: WeeklyHabitLogService,
