@@ -3,7 +3,6 @@ package com.habit.habit_tracker.service
 import com.habit.habit_tracker.constants.ErrorMessage.USER_IN_USE
 
 import org.springframework.http.HttpStatus
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.dao.DataIntegrityViolationException
 
@@ -12,12 +11,10 @@ import com.habit.habit_tracker.dto.request.UserUpdateRequest
 import com.habit.habit_tracker.exception.ApiRequestException
 import com.habit.habit_tracker.repository.UserRepository
 import com.habit.habit_tracker.security.AuthUtil
-import kotlin.require
 
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder,
     private val authUtil: AuthUtil
 ) {
     fun getUserDetails(): User {
@@ -26,9 +23,9 @@ class UserService(
 
     fun updateUserDetails(request: UserUpdateRequest): User {
         val user: User = authUtil.getAuthenticatedUser()
-        
+
         user.apply {
-            request.username?.let { username = it }
+            request.username?.let { username = it.trim().lowercase() }
             request.firstName?.let { firstName = it }
             request.lastName?.let { lastName = it }
         }
