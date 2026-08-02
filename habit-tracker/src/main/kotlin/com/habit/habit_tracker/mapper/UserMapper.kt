@@ -10,7 +10,7 @@ object UserMapper {
             username = user.username,
             firstName = user.firstName,
             lastName = user.lastName,
-            lastLogin = user.lastLogin!!,
+            lastLogin = user.lastLogin,
             createdAt = user.createdAt!!
         )
     }
