@@ -27,7 +27,6 @@ client/.env.production.local
 
 # ===== Common =====
 .env
-.env.*
 *.log
 *.tmp
 *.bak
