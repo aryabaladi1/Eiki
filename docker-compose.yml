@@ -16,8 +16,10 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+
   backend:
-    build: .
+    build:
+      context: ./habit-tracker
 
     container_name: habit-backend
 
@@ -32,6 +34,22 @@ services:
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+
+
+  frontend:
+    build:
+      context: ./client
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL}
+
+    container_name: habit-frontend
+
+    ports:
+      - "3000:80"
+
+    depends_on:
+      - backend
+
 
 volumes:
   postgres-data:
