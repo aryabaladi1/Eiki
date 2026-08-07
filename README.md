@@ -1,6 +1,6 @@
 # Eiki
 
-A full-stack habit tracking application built with Kotlin Spring Boot, React, and PostgreSQL.
+Eiki is a full-stack habit tracking application built with Kotlin Spring Boot, React, and PostgreSQL.
 
 ## Features
 
