@@ -4,7 +4,6 @@ Eiki is a full-stack habit tracking application built with Kotlin Spring Boot, R
 
 ## Features
 
-- JWT authentication
 - Create and manage habits
 - Track daily progress
 - Weekly habit statistics
