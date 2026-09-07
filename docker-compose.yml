@@ -45,7 +45,7 @@ services:
     container_name: habit-frontend
 
     ports:
-      - "3000:80"
+      - "3050:80"
 
     depends_on:
       - backend
