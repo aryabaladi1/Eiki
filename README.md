@@ -58,7 +58,7 @@ The application will be available at:
 
 Frontend:
 ```
-http://localhost:3000
+http://localhost:3050
 ```
 
 Backend API:
